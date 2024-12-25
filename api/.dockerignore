@@ -1,0 +1,8 @@
+# DIRS
+/load_test
+/__pycache__
+
+# FILES
+*/*.log
+.md
+.gitignore

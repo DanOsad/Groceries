@@ -1,0 +1,7 @@
+# DIRS
+logs
+.venv
+__pycache__
+
+# FILES
+.env

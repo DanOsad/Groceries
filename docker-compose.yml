@@ -1,0 +1,49 @@
+
+services:
+  # MariaDB service
+  db:
+    image: mariadb:latest
+    container_name: grocery-db
+    hostname: grocery-db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: grocery_system
+    ports:
+      - "3306:3306"   # Expose MariaDB port to host
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql  # Mount init.sql from db folder
+    networks:
+      - grocery_network
+
+  # Adminer service (web-based database manager)
+  adminer:
+    image: adminer
+    container_name: grocery-adminer
+    hostname: grocery-adminer
+    ports:
+      - "8080:8080"   # Expose Adminer web interface on port 8080
+    networks:
+      - grocery_network
+    restart: always
+
+  # API service 
+  api: 
+    build: 
+      context: ./api 
+      dockerfile: Dockerfile 
+    container_name: grocery-api 
+    hostname: grocery-api
+    volumes: 
+      - ./api:/app # Mount the api directory to /app in the container 
+    ports: 
+      - "5000:5000" # Expose Flask app on port 5000 
+    networks: 
+      - grocery_network 
+    environment: 
+      FLASK_APP: app.py
+      FLASK_ENV: development
+
+networks:
+  grocery_network:
+    driver: bridge
+

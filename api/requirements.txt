@@ -1,0 +1,9 @@
+Flask
+Flask-SQLAlchemy
+waitress
+requests
+SQLAlchemy
+python-dotenv
+Werkzeug
+pymysql
+mysql-connector-python

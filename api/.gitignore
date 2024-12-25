@@ -1,0 +1,10 @@
+# DIRS
+/__pycache__
+*/__pycache__
+/logs
+
+# FILES
+*.log
+*.env
+*.bk
+load_test/locust_report.html

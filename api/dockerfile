@@ -1,0 +1,21 @@
+# Pick a low configuration python base image
+# FROM python:3.6.9-alpine
+FROM python:3.13.1-alpine3.21
+
+# Install build-base, needed for compiling C code
+RUN apk add --no-cache build-base libffi-dev
+
+# Install libgpgme-dev, needed for gpg package
+RUN apk add --no-cache gpgme-dev
+
+# Create a folder app in container and work inside it
+WORKDIR /app
+
+# Copy requirements file
+COPY requirements.txt .
+
+# Install all the requirements
+RUN pip3 install -r requirements.txt
+
+# Define entrypoint to run flask
+ENTRYPOINT [ "waitress-serve", "--url-prefix=/", "--listen=0.0.0.0:5000", "app:app" ]
